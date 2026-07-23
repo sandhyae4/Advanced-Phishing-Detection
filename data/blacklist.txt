@@ -1,0 +1,8 @@
+# Local domain blacklist — one hostname per line.
+# Lines beginning with # are ignored. Subdomains of an entry also match.
+# Add confirmed malicious domains here; do not add full URLs or URL paths.
+account-suspended-check.net
+account-security-check.xyz
+secure-account-restore.xyz
+phishing-demo.invalid
+
