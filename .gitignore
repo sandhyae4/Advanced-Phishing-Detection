@@ -9,3 +9,10 @@ data/*.db
 models/*.joblib
 .pytest_cache/
 
+# Documents & Presentations
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.pdf
+
