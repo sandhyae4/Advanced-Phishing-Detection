@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore")
 import joblib
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -6,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from config import MODEL_PATH
 from services.features import vectorize
 
-MODEL_VERSION = 9
+MODEL_VERSION = 10
 _bundle = None
 
 
@@ -132,6 +134,52 @@ def _training_corpus():
     for domain in trusted_apps:
         for path in benign_paths:
             rows.extend([(f"https://{domain}{path}", "Legitimate"), (f"https://www.{domain}{path}", "Legitimate")])
+
+    # Media piracy, drive-by downloads, malware delivery and suspicious file patterns (e.g. from Kaggle datasets)
+    media_and_malware_samples = [
+        ("http://mp3raid.com/music/krizz_kaliko.html", "Suspicious"),
+        ("https://mp3raid.com/music/krizz_kaliko.html", "Suspicious"),
+        ("http://free-mp3-download.site/music/top-hits.html", "Suspicious"),
+        ("https://media-stream-pirate.xyz/stream/video.php", "Suspicious"),
+        ("http://warez-cracks-keygen.net/download/patch.exe", "Phishing"),
+        ("http://torrent-search-indexer.site/audio/track.torrent", "Suspicious"),
+        ("https://crack-serial-keys.top/software/keygen.zip", "Phishing"),
+        ("http://freedownload-music.work/mp3/song.html", "Suspicious"),
+        ("http://direct-driver-installer.click/setup.exe", "Phishing"),
+        ("https://payload-runner.xyz/payload.scr", "Phishing"),
+        ("http://invoice-document.zip/invoice.pdf.exe", "Phishing"),
+        ("https://trojan-delivery-test.site/update.bat", "Phishing"),
+        ("http://music-download-portal.online/track/audio.mp3", "Suspicious"),
+        ("https://streaming-media-free.site/movie/watch.html", "Suspicious"),
+        ("http://pirate-archive.top/torrents/software.iso", "Suspicious"),
+        ("https://modded-apk-download.club/game/installer.apk", "Suspicious"),
+    ]
+    rows.extend(media_and_malware_samples * 4)
+
+    # Free dynamic hosting and staging subdomains
+    free_hosting_samples = [
+        ("https://account-verify.firebaseapp.com/login", "Phishing"),
+        ("https://paypal-update.pages.dev/signin", "Phishing"),
+        ("https://secure-portal.000webhostapp.com/confirm", "Phishing"),
+        ("https://appleid-support.ngrok-free.app/verify", "Phishing"),
+        ("https://wallet-restore.duckdns.org/seed", "Phishing"),
+    ]
+    rows.extend(free_hosting_samples * 4)
+
+    # Diverse legitimate external web properties (media streaming, docs, blogs, encyclopedias)
+    benign_real_sites = [
+        ("https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT", "Legitimate"),
+        ("https://soundcloud.com/artist/song-title", "Legitimate"),
+        ("https://www.bbc.com/news/technology-12345678", "Legitimate"),
+        ("https://en.wikipedia.org/wiki/Phishing", "Legitimate"),
+        ("https://docs.python.org/3/library/urllib.parse.html", "Legitimate"),
+        ("https://developer.mozilla.org/en-US/docs/Web/HTTP", "Legitimate"),
+        ("https://stackoverflow.com/questions/123456/how-to-fix", "Legitimate"),
+        ("https://archive.org/details/audio-collection", "Legitimate"),
+        ("https://www.nature.com/articles/d41586-024-00001-x", "Legitimate"),
+4        ("https://medium.com/@author/understanding-cybersecurity-12345", "Legitimate"),
+    ]
+    rows.extend(benign_real_sites * 4)
 
     # Deduplicate exact URL/label pairs while preserving deterministic ordering.
     rows = list(dict.fromkeys(rows))

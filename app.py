@@ -48,7 +48,8 @@ def create_app():
         scan = get_scan(scan_id)
         if not scan:
             return "Report not found", 404
-        return send_file(build_pdf(scan), mimetype="application/pdf", as_attachment=True,
+        as_attachment = request.args.get("download", "0") in {"1", "true", "True"}
+        return send_file(build_pdf(scan), mimetype="application/pdf", as_attachment=as_attachment,
                          download_name=f"phishing-assessment-{scan_id}.pdf")
 
     @app.get("/health")

@@ -2,9 +2,10 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.env
 instance/*.db
+data/*.db
+*.db
 models/*.joblib
 .pytest_cache/
 
-config.bat
-node_modules

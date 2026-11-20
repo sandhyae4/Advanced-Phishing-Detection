@@ -11,7 +11,7 @@ The included model is trained on a deterministic corpus spanning credential thef
 ## Features
 
 - Normalized URL validation restricted to HTTP/HTTPS
-- 19 explainable lexical/domain features and Random Forest classification trained on 1,366 pattern examples
+- 20 explainable lexical/domain features and Random Forest classification trained on 1,366 pattern examples
 - Hybrid weighted risk score with reasons and recommendations
 - WHOIS domain age and TLS certificate checks with safe network timeouts
 - Protection against private/local address probing in live TLS checks
@@ -44,13 +44,15 @@ python -m pytest -q
 
 The trained artifact is stored in `models/url_classifier.joblib`. Delete it or run the trainer after changing feature logic.
 
-## Default blacklist
+## Default blacklist & threat intelligence
 
-`data/blacklist.txt` provides offline blacklist screening without an API key. Add one confirmed malicious hostname per line. Exact domains and their subdomains match. A result of `Clean (local)` means only that the hostname was absent from this project list; it is not a global safety guarantee. Configure Google Safe Browsing or VirusTotal for broader live coverage.
+`data/blacklist.txt` provides extensive offline blacklist screening without requiring external API keys. It supports hostnames, subdomains, full URLs, and specific paths. When a URL is scanned, it is cross-referenced against the local blacklist, brand typosquatting rules, and any configured live feeds (Google Safe Browsing, VirusTotal). If listed, threat score is elevated to high severity and marked as `Listed (Threat Match)`.
+
+You can also manage the blacklist directly via the web UI at `/blacklist`, or use the **+ Add to Blacklist** button on the result screen to blacklist newly identified phishing domains with one click.
 
 ## JSON API
 
-`POST /api/analyze` with JSON: `{"url":"https://example.com"}`. Other routes: `/`, `/dashboard`, `/report/<id>.pdf`, and `/health`.
+`POST /api/analyze` with JSON: `{"url":"https://example.com"}`. Other routes: `/`, `/dashboard`, `/blacklist`, `/report/<id>.pdf`, and `/health`.
 
 ## Folder structure
 

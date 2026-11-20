@@ -85,7 +85,8 @@ footer {
 .page-head { justify-content:center; text-align:center; align-items:center; }
 .page-head > div { margin-inline:auto; }
 .page-head p { margin-inline:auto; }
-.page-head .button { position:absolute; right:0; bottom:0; }
+.page-head .report-action { position:absolute; right:0; bottom:0; display:flex; align-items:center; }
+.page-head .button { position:static; }
 .panel,.metrics,.score-card,.stat-grid article { background:linear-gradient(145deg,rgba(27,40,38,.94),rgba(20,27,29,.96)); border-color:#304944; }
 .metrics div { background:#162220; }
 .dashboard-content { width:100%; max-width:1100px; margin-inline:auto; }
@@ -129,6 +130,7 @@ footer strong {
     flex-direction: row;
     flex-wrap: wrap;
   }
+  .page-head .report-action,
   .page-head .button { position:static; }
   .donut-layout { flex-direction:column; gap:28px; padding-inline:0; }
   .donut { width:180px; }

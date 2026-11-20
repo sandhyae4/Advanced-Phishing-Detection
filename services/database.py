@@ -14,7 +14,16 @@ CREATE INDEX IF NOT EXISTS idx_scans_created ON scans(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_scans_classification ON scans(classification);
 """
 
+_mem_con = None
+
 def connect():
+    global _mem_con
+    if str(DATABASE) in {":memory:", "memory"}:
+        if _mem_con is None:
+            _mem_con = sqlite3.connect(":memory:", check_same_thread=False)
+            _mem_con.row_factory = sqlite3.Row
+            _mem_con.executescript(SCHEMA)
+        return _mem_con
     con = sqlite3.connect(DATABASE)
     con.row_factory = sqlite3.Row
     return con
@@ -37,11 +46,21 @@ def get_scan(scan_id):
     if not row: return None
     return {**dict(row), **json.loads(row["details_json"])}
 
-def dashboard_data():
+def dashboard_data(limit=None):
+    init_db()
     with connect() as con:
         total = con.execute("SELECT COUNT(*) FROM scans").fetchone()[0]
         counts = {r[0]: r[1] for r in con.execute("SELECT classification,COUNT(*) FROM scans GROUP BY classification")}
-        recent = [dict(r) for r in con.execute("SELECT * FROM scans ORDER BY id DESC LIMIT 20")]
+        if limit:
+            recent = [dict(r) for r in con.execute("SELECT * FROM scans ORDER BY id DESC LIMIT ?", (limit,))]
+        else:
+            recent = [dict(r) for r in con.execute("SELECT * FROM scans ORDER BY id DESC")]
         avg = con.execute("SELECT COALESCE(AVG(threat_score),0) FROM scans").fetchone()[0]
-    return {"total": total, "counts": counts, "recent": recent, "average": round(avg, 1)}
+    return {
+        "total": total,
+        "counts": counts,
+        "recent": recent,
+        "average": round(avg, 1),
+        "metrics": {"total": total, "average": round(avg, 1), "counts": counts}
+    }
 

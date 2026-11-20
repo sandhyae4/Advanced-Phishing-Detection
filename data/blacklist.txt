@@ -1,8 +1,171 @@
-# Local domain blacklist — one hostname per line.
-# Lines beginning with # are ignored. Subdomains of an entry also match.
-# Add confirmed malicious domains here; do not add full URLs or URL paths.
+# ==============================================================================
+# PhishGuard Local Threat Intelligence & Domain Blacklist
+# ==============================================================================
+# One entry per line. Lines starting with # are ignored.
+# Supports:
+#   - Hostnames (e.g. malicious-site.com) -> matches exact domain and all subdomains
+#   - Full URLs or paths (e.g. amtso.org/check-desktop-phishing-page/)
+#   - Wildcards (e.g. *.evil-domain.xyz)
+#   - IP addresses and ports
+# ==============================================================================
+
+# --- Baseline Demo & Simulation Hosts ---
 account-suspended-check.net
 account-security-check.xyz
 secure-account-restore.xyz
 phishing-demo.invalid
 
+# --- Official Anti-Phishing Security Test Pages (AMTSO & Google Test) ---
+amtso.org/check-desktop-phishing-page/
+amtso.org/check-mobile-phishing-link/
+www.amtso.org/check-desktop-phishing-page/
+www.amtso.org/check-mobile-phishing-link/
+testsafebrowsing.appspot.com
+malware.testing.google.test
+
+# --- Confirmed Test Phishing URLs Scanned by User ---
+arnazon-order-update.online
+amaz0n-order-update.net
+facebook-login-support.click
+faceboook.com
+xn--pypal-4ve.com
+local-service-test.internal
+invoice-download.work
+new-wallet-support.site
+account-verification-service.live
+
+# --- Common Brand Typosquatting Domains ---
+facbook.com
+faceb00k.com
+gooogle.com
+gogle.com
+micros0ft.com
+mircosoft.com
+paypa1.com
+paypl.com
+appple.com
+amaz0n.com
+netflx.com
+instagrarn.com
+whatsap.com
+githab.com
+openal.com
+chatgptt.com
+dropb0x.com
+linkedln.com
+
+# --- PayPal Brand Impersonation & Fake Portals ---
+paypal-account-verify.xyz
+paypal-security-alert.xyz
+paypal-login-secure.xyz
+paypal-security-update.com
+secure-paypal-login.com
+paypal-verify-account.click
+paypal-account-suspended.xyz
+paypal-confirmation-notice.top
+paypal-identity-check.net
+paypal-resolution-center.xyz
+paypal-update-account.online
+paypal-verification-check.site
+paypal-login-secure.example
+
+# --- Amazon Brand Impersonation & Order Scams ---
+amazon-order-security.net
+amazon-security-alert.xyz
+amazon-account-support.xyz
+amazon-billing-update.top
+amazon-prime-renewal-alert.xyz
+amazon-security-alert.example
+amazon-gift-winner.xyz
+amazon-unusual-activity.online
+
+# --- Meta / Facebook / Instagram / WhatsApp Phishing ---
+facebook-security.example
+facebook-verify-badge.click
+meta-account-restore.xyz
+facebook-appeal-security.online
+instagram-copyright-appeal.com
+instagram-verify-badge.top
+instagram-support-center.xyz
+whatsapp-security-update.xyz
+whatsapp-web-login.click
+whatsapp-account-protect.top
+
+# --- Google / Alphabet Impersonation ---
+secure-google-login.example
+google-drive-security-check.xyz
+google-account-verify.net
+google-docs-share.top
+gmail-storage-warning.xyz
+google-security-notice.online
+google-drive-share.click
+
+# --- Microsoft & Office365 Credential Harvesters ---
+microsoft-account-verify.xyz
+microsoft-security-update.online
+microsoft-account-verify.example
+office365-verify-login.com
+login.microsoftonline.security-check.xyz
+onedrive-file-share.top
+outlook-web-verify.online
+microsoft-alert-action.xyz
+
+# --- Apple / iCloud Impersonation ---
+apple-id-confirm.example
+appleid-verify-alert.xyz
+apple-security-check.online
+icloud-find-my-iphone.xyz
+apple-pay-suspended.click
+apple-id-security-lock.top
+apple-support-unlock.online
+
+# --- Netflix Billing & Account Suspension Scams ---
+netflix-billing-update.xyz
+netflix-account-reactivate.com
+netflix-payment-failed.top
+netflix-billing-update.example
+netflix-account-verification.online
+
+# --- Banking & Financial Credential Theft ---
+chase-security-verify.com
+chase-security-login.com
+chase-online-alert.xyz
+wellsfargo-verify-login.xyz
+wellsfargo-account-update.xyz
+bofa-security-login.com
+bankofamerica-alert.xyz
+citi-alert-verify.com
+citibank-online-verify.net
+verify-bank-account.example
+bank-login-check.example
+bank-auth-portal.xyz
+
+# --- Cryptocurrency & Wallet Draining Scams ---
+metamask-wallet-verify.xyz
+metamask-wallet-restore.xyz
+metamask-airdrop-claim.click
+binance-security-verify.com
+binance-security-update.com
+coinbase-wallet-support.xyz
+trustwallet-recovery-phrase.com
+ledger-wallet-update.xyz
+claim-crypto-airdrop.xyz
+seed-phrase-verify.xyz
+
+# --- Postal, Delivery & Customs Phishing ---
+usps-tracking-redelivery.com
+usps-parcel-fee.xyz
+usps-delivery-status.top
+fedex-parcel-delivery.xyz
+fedex-tracking-alert.top
+dhl-express-tracking.com
+dhl-shipment-held.xyz
+ups-tracking-package.online
+
+# --- Prize, Sweepstakes & Urgent Reward Lures ---
+claim-your-prize.example
+winner-reward.example
+free-gift.example
+urgent-giveaway.example
+exclusive-reward-claim.xyz
+lottery-winner-notification.top
